@@ -1,0 +1,93 @@
+  {/* About Section */}
+  <section className="py-14 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h2 className="text-3xl font-bold mb-4 text-orange-700">About Us</h2>
+      <p className="text-lg leading-8">
+        Sri Venkateshwara Catering Services provides quality vegetarian and non-vegetarian catering services for weddings, receptions, corporate functions, birthday celebrations, and family events. We are known for hygienic preparation, authentic flavors, and excellent customer service.
+      </p>
+    </div>
+
+    <div>
+      <img
+        src="https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop"
+        alt="Catering Food"
+        className="rounded-3xl shadow-2xl w-full h-[350px] object-cover"
+      />
+    </div>
+  </section>
+
+  {/* Services */}
+  <section className="bg-white py-14 px-6">
+    <div className="max-w-6xl mx-auto">
+      <h2 className="text-3xl font-bold text-center text-orange-700 mb-10">Our Services</h2>
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map((service, index) => (
+          <div
+            key={index}
+            className="bg-orange-100 rounded-2xl p-6 shadow-md hover:shadow-xl transition-shadow"
+          >
+            <h3 className="text-xl font-semibold mb-2">{service}</h3>
+            <p>
+              Professional catering with tasty food, quality ingredients, and excellent service for every occasion.
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Menu Section */}
+  <section className="py-14 px-6 max-w-6xl mx-auto">
+    <h2 className="text-3xl font-bold text-center text-orange-700 mb-10">Popular Menu Items</h2>
+
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {menuItems.map((item, index) => (
+        <div
+          key={index}
+          className="bg-yellow-100 rounded-2xl p-5 shadow-md text-center"
+        >
+          <h3 className="text-xl font-semibold">{item}</h3>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* Gallery */}
+  <section className="bg-white py-14 px-6">
+    <div className="max-w-6xl mx-auto">
+      <h2 className="text-3xl font-bold text-center text-orange-700 mb-10">Gallery</h2>
+
+      <div className="grid md:grid-cols-3 gap-6">
+        <img
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop"
+          className="rounded-2xl h-64 w-full object-cover shadow-lg"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop"
+          className="rounded-2xl h-64 w-full object-cover shadow-lg"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=1200&auto=format&fit=crop"
+          className="rounded-2xl h-64 w-full object-cover shadow-lg"
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* Contact */}
+  <section className="py-14 px-6 max-w-4xl mx-auto text-center">
+    <h2 className="text-3xl font-bold text-orange-700 mb-6">Contact Us</h2>
+
+    <div className="bg-orange-100 rounded-3xl p-8 shadow-lg">
+      <p className="text-lg mb-3"><strong>Phone:</strong> +91 7702536653,9989689924</p>
+      <p className="text-lg mb-3"><strong>Email:</strong> srivenkateshwaracatering@gmail.com</p>
+      <p className="text-lg"><strong>Location:</strong> hyderabad dammaiguda, India</p>
+    </div>
+  </section>
+
+  {/* Footer */}
+  <footer className="bg-orange-700 text-white text-center py-6 mt-10">
+    <p>© 2026 Sri Venkateshwara Catering Services. All Rights Reserved.</p>
+  </footer>
+</div>
