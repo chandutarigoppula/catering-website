@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function SriVenkateshwaraCatering() {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    eventType: "",
+    date: "",
+    time: "",
+    address: "",
+    guests: "",
+    foodType: "",
+    requirements: "",
+  });
+  const [statusMessage, setStatusMessage] = useState("");
+
   const services = [
     "Wedding Catering",
     "Birthday Parties",
     "Corporate Events",
     "Traditional South Indian Meals",
     "Outdoor Catering",
-    "Festival Catering"
+    "Festival Catering",
   ];
 
   const menuItems = [
@@ -16,8 +29,51 @@ export default function SriVenkateshwaraCatering() {
     "All types of NonVeg curries",
     "Sweets",
     "Tiffins",
-    "Customized menu"
+    "Customized menu",
   ];
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatusMessage("Submitting booking...");
+
+    try {
+      const response = await fetch("/api/book-event", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Booking submission failed.");
+      }
+
+      setStatusMessage("Booking Submitted Successfully!");
+      console.log(result.booking);
+      setFormData({
+        name: "",
+        phone: "",
+        eventType: "",
+        date: "",
+        time: "",
+        address: "",
+        guests: "",
+        foodType: "",
+        requirements: "",
+      });
+    } catch (error) {
+      setStatusMessage(error.message);
+      console.error(error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-yellow-50 text-gray-600 font-sans">
@@ -27,7 +83,10 @@ export default function SriVenkateshwaraCatering() {
         <p className="text-xl max-w-3xl mx-auto">
           Delicious Food • Traditional Taste • Memorable Events
         </p>
-        <button className="mt-6 bg-white text-yellow-600 px-6 py-3 rounded-2xl shadow-md font-semibold hover:scale-105 transition-transform">
+        <button
+          className="mt-6 bg-white text-yellow-600 px-6 py-3 rounded-2xl shadow-md font-semibold hover:scale-105 transition-transform"
+          onClick={() => document.getElementById("booking-form")?.scrollIntoView({ behavior: "smooth" })}
+        >
           Book Your Event
         </button>
       </header>
@@ -68,6 +127,132 @@ export default function SriVenkateshwaraCatering() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Booking Section */}
+      <section id="booking-form" className="py-14 px-6 bg-orange-50">
+        <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-8">
+          <h2 className="text-3xl font-bold text-center text-orange-700 mb-8">Book Your Event</h2>
+          <form onSubmit={handleSubmit} className="grid gap-6 md:grid-cols-2">
+            <label className="block">
+              <span className="text-gray-700">Full Name</span>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="mt-2 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-orange-500 focus:outline-none"
+                required
+              />
+            </label>
+
+            <label className="block">
+              <span className="text-gray-700">Phone</span>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="mt-2 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-orange-500 focus:outline-none"
+                required
+              />
+            </label>
+
+            <label className="block md:col-span-2">
+              <span className="text-gray-700">Event Type</span>
+              <input
+                type="text"
+                name="eventType"
+                value={formData.eventType}
+                onChange={handleChange}
+                className="mt-2 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-orange-500 focus:outline-none"
+                placeholder="Wedding, Birthday, Corporate, etc."
+                required
+              />
+            </label>
+
+            <label className="block">
+              <span className="text-gray-700">Event Date</span>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                className="mt-2 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-orange-500 focus:outline-none"
+              />
+            </label>
+
+            <label className="block">
+              <span className="text-gray-700">Event Time</span>
+              <input
+                type="time"
+                name="time"
+                value={formData.time}
+                onChange={handleChange}
+                className="mt-2 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-orange-500 focus:outline-none"
+              />
+            </label>
+
+            <label className="block md:col-span-2">
+              <span className="text-gray-700">Address</span>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                className="mt-2 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-orange-500 focus:outline-none"
+              />
+            </label>
+
+            <label className="block">
+              <span className="text-gray-700">Number of Guests</span>
+              <input
+                type="number"
+                name="guests"
+                value={formData.guests}
+                onChange={handleChange}
+                className="mt-2 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-orange-500 focus:outline-none"
+                min="1"
+              />
+            </label>
+
+            <label className="block">
+              <span className="text-gray-700">Food Preference</span>
+              <input
+                type="text"
+                name="foodType"
+                value={formData.foodType}
+                onChange={handleChange}
+                className="mt-2 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-orange-500 focus:outline-none"
+                placeholder="Veg, NonVeg, Mixed"
+              />
+            </label>
+
+            <label className="block md:col-span-2">
+              <span className="text-gray-700">Special Requirements</span>
+              <textarea
+                name="requirements"
+                value={formData.requirements}
+                onChange={handleChange}
+                className="mt-2 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-orange-500 focus:outline-none"
+                rows="4"
+                placeholder="Any dietary needs, decoration requests, or notes"
+              />
+            </label>
+
+            <div className="md:col-span-2 text-center">
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center rounded-full bg-orange-600 px-8 py-3 text-white shadow-lg transition hover:bg-orange-700"
+              >
+                Submit Booking
+              </button>
+              {statusMessage && (
+                <p className="mt-4 text-sm text-orange-700">{statusMessage}</p>
+              )}
+            </div>
+          </form>
         </div>
       </section>
 
