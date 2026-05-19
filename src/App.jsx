@@ -83,12 +83,12 @@ export default function SriVenkateshwaraCatering() {
         <p className="text-xl max-w-3xl mx-auto">
           Delicious Food • Traditional Taste • Memorable Events
         </p>
-        <button
-          className="mt-6 bg-white text-yellow-600 px-6 py-3 rounded-2xl shadow-md font-semibold hover:scale-105 transition-transform"
-          onClick={() => document.getElementById("booking-form")?.scrollIntoView({ behavior: "smooth" })}
+        <a
+          href="#booking-form"
+          className="mt-6 inline-block bg-white text-yellow-600 px-6 py-3 rounded-2xl shadow-md font-semibold hover:scale-105 transition-transform"
         >
           Book Your Event
-        </button>
+        </a>
       </header>
 
       {/* About Section */}
