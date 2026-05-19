@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import fs from "fs/promises";
 import path from "path";
+import os from "os";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -9,6 +10,18 @@ const bookingsFile = path.resolve("./bookings.json");
 
 app.use(cors());
 app.use(express.json());
+
+function getLocalIPAddress() {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      if (iface.family === "IPv4" && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  return "localhost";
+}
 
 async function readBookings() {
   try {
@@ -26,10 +39,10 @@ async function writeBookings(bookings) {
 app.post("/api/book-event", async (req, res) => {
   const booking = req.body;
 
-  if (!booking.name || !booking.phone || !booking.eventType) {
+  if (!booking.name || !booking.phone || !booking.eventType || !booking.date || !booking.time || !booking.address) {
     return res.status(400).json({
       success: false,
-      message: "Please provide name, phone, and event type.",
+      message: "Please provide name, phone, event type, date, time, and address.",
     });
   }
 
@@ -61,6 +74,9 @@ app.get("/api/bookings", async (req, res) => {
   res.json({ success: true, bookings });
 });
 
-app.listen(port, () => {
-  console.log(`Backend server running on http://localhost:${port}`);
+const localIP = getLocalIPAddress();
+app.listen(port, "0.0.0.0", () => {
+  console.log(`\n✅ Backend server running on:`);
+  console.log(`   Local:  http://localhost:${port}`);
+  console.log(`   Network: http://${localIP}:${port}\n`);
 });
